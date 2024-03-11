@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DBUtility {
@@ -43,6 +44,62 @@ public class DBUtility {
         }
         return courses;
     }
+
+    public static ArrayList<Student> getStudentsFromDB(){
+
+        ArrayList<Student> students = new ArrayList<>();
+        try(
+                Connection conn = DriverManager.getConnection(connectUrl,user,password);
+                Statement statement = conn.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM students");
+                ) {
+            while (resultSet.next()){
+                int studentNum = resultSet.getInt("studentNum");
+                ArrayList<Grade> grades = getGradesFromDB(studentNum);
+                String firstName = resultSet.getString("firstName");
+                String lastName = resultSet.getString("lastName");
+                String address = resultSet.getString("address");
+                LocalDate birthday = resultSet.getDate("birthday").toLocalDate();
+
+                students.add(new Student(firstName,lastName,address,birthday,studentNum,grades));
+
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return students;
+    }
+
+//    private static ArrayList<Grade> getGradesFromDB(int studentNum){
+//        ArrayList<Grade> grades = new ArrayList<>();
+//        try (
+//                Connection conn = DriverManager.getConnection(connectUrl,user,password);
+//                Statement statement = conn.createStatement();
+//                ResultSet resultSet = statement.executeQuery("SELECT * FROM grades WHERE studentNum = " + studentNum);
+//
+//        )
+//        {
+//            while (resultSet.next()){
+//
+//                int crn = resultSet.getInt("crn");
+//                int grade = resultSet.getInt("grade");
+//                grades.add(new Grade(studentNum,crn,grade));
+//            }
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return grades;
+//    }
+
+    //Using prepared statements
+
+    private static ArrayList<Grade>
+
+
+
 
 
 }

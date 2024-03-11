@@ -1,9 +1,6 @@
 package com.example.w24comp1008lhw9;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -96,7 +93,27 @@ public class DBUtility {
 
     //Using prepared statements
 
-    private static ArrayList<Grade>
+    private static ArrayList<Grade> getGradesFromDB(int studentNum){
+        ArrayList<Grade> grades = new ArrayList<>();
+        try (
+                Connection conn = DriverManager.getConnection(connectUrl,user,password);
+                PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM grades WHERE studentNum = ?");
+                ){
+            preparedStatement.setInt(1,studentNum); // Setting the value for the parameter
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()){
+                    int crn = resultSet.getInt("crn");
+                    int grade = resultSet.getInt("grade");
+
+                    grades.add(new Grade(studentNum,crn,grade));
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return grades;
+    }
 
 
 

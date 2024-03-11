@@ -9,10 +9,10 @@ public class Person {
     private LocalDate birthday;
 
     public Person(String firstName, String lastName, String address, LocalDate birthday) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.birthday = birthday;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setAddress(address);
+        setBirthday(birthday);
     }
 
     /**
@@ -77,7 +77,12 @@ public class Person {
         return Period.between(birthday,LocalDate.now()).getYears();
     }
 
+    /**
+     * This method will return person's full name and age
+     * @return
+     */
 
+    @Override
     public String toString(){
         return String.format("%s %s is %d years old",firstName,lastName,getAge());
     }

@@ -43,4 +43,23 @@ public class Student extends Person{
     public void setGrades(ArrayList<Grade> grades) {
         this.grades = grades;
     }
+
+    public String toString(){
+        return String.format("%s, student number: %d",super.toString(),studentNum,getAvgGrade());
+    }
+
+    public double getAvgGrade()
+    {
+        if (grades.size()==0)
+            return -1;
+
+        double total = 0;
+        for (Grade grade : grades)
+            total += grade.getGrade;
+
+        return total/grades.size();
+    }
+
+
+
 }

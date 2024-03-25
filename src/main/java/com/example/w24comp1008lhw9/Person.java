@@ -83,8 +83,11 @@ public class Person {
      */
 
     @Override
+//    public String toString(){
+//        return String.format("%s %s is %d years old",firstName,lastName,getAge());
+//    }
     public String toString(){
-        return String.format("%s %s is %d years old",firstName,lastName,getAge());
+        return String.format("%s %s",firstName,lastName);
     }
 
 }
